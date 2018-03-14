@@ -1,0 +1,76 @@
+<html>
+<head><title>ToyWiFi WebServer for Lego</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<form action="recall" method="post">
+<table style="width:100%">
+<tr>
+<td style="width:33%">Restore <input type="submit" name="set" value="1"></td>
+<td style="width:33%">Restore <input type="submit" name="set" value="2"></td>
+<td>Restore <input type="submit" name="set" value="3"></td>
+</tr>
+</table>
+</form>
+
+<br>
+
+<form action="control" method="post">
+<table style="width:100%">
+    <tr>
+        <th>"POST" Play with</th>
+                <td> 
+                    <table>
+                        <tr><td><input type="radio" name="ctl" value="gyrows" checked> Orientation</td></tr>
+                        <tr><td><input type="radio" name="ctl" value="touchws"> Touch Screen</td></tr>
+                    </table>
+        </td>
+    </tr>                        
+    <tr>
+        <th>Parameters</th>
+                <td> 
+                    <table>                        
+                        <tr><td><input type="number" name="hyst" min="1" max="10" value="2"> Hysteresis, *10</td></tr>
+                        <tr><td><input type="number" name="rangex" min="1" max="10" value="1"> Range X, *100</td></tr>
+                        <tr><td><input type="number" name="rangey" min="5" max="15" value="8"> Range Y, *100</td></tr>          
+                        <tr><td><input type="number" name="beta0" min="1" max="10" value="5"> Beta</td></tr>
+                        <tr><td><input type="number" name="gamma0" min="1" max="10" value="5"> Gamma</td></tr>          
+                    </table>
+        </td>
+    </tr>
+    <tr>
+        <th>Motor 1</th>
+        <td> 
+                    <table>
+                        <tr><td><input type="number" name="m1zero" min="370" max="390" value="380"></td><td>Zero Level, *100</td></tr>
+                        <tr><td><input type="radio" name="m1inv" value="1"></td><td> Direct</td></tr>
+                        <tr><td><input type="radio" name="m1inv" value="-1" checked></td><td> Reverse</td></tr>
+                        <tr><td><input type="submit" name="tryM1" value="Try"></td><td></td></tr>          
+                    </table>
+        </td>
+    </tr>
+    <tr>
+        <th>Motor 2</th>
+        <td> 
+                    <table>
+                        <tr><td><input type="number" name="m2zero" min="370" max="390" value="380"></td><td>Zero Level, *100</td></tr>
+                        <tr><td><input type="radio" name="m2inv" value="1"checked></td><td> Direct</td></tr>
+                        <tr><td><input type="radio" name="m2inv" value="-1"></td><td> Reverse</td></tr>
+                        <tr><td><input type="submit" name="tryM2" value="Try"></td><td></td></tr>          
+                    </table>
+        </td>
+    </tr>
+</table>
+
+<table style="width:100%">    
+<tr>
+<td style="width:25%">play <input type="submit" name="save" value="0">  </td>
+<td style="width:25%">save as 1 <input type="submit" name="save" value="0">  </td>
+<td style="width:25%">save as 2<input type="submit" name="save" value="0">  </td>
+<td style="width:25%">save as 3<input type="submit" name="save" value="0">  </td>
+</tr>
+</table>
+</form>    
+</body>
+</html>

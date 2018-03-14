@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSocket for Lego!</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="direction.css">
+<script language="javascript" type="text/javascript">
+
+  var wsUri = "ws://192.168.4.1/legows";
+  var output;
+  
+  const LEFTMOTOR = 0;
+  const RIGHTMOTOR = 1;
+
+  var zero = 		[%m1zero%*100, %m2zero%*100];
+  var rangeY = 		%rangey%*100;	//200;
+  var rangeX = 		%rangex%*100;	//100;
+  var hist = 		[%hyst%*100, %hyst%*100];	// all were 200
+  var chan = 		[%m1zero%*100, %m2zero%*100];
+  var chanprev = 	[%m1zero%*100, %m2zero%*100];
+  var inv = [%m1inv%, %m2inv%]		//[-1,1,0];
+    
+  var comment = "no comments";
+  var enabled = 0;
+  var cntr = 0;
+  
+  const beta0 = %beta0%;	//5;
+  const gamma0 = %gamma0%;	//5;
+  
+  function init() {
+    websocket = new WebSocket(wsUri);
+    websocket.onmessage = function(evt) { onMessage(evt) };
+    
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener("deviceorientation", function(event) {
+            var beta = Math.round(event.beta);
+            var gamma = Math.round(event.gamma);
+               
+            document.getElementById("y").style.webkitTransform = "scaleY("+beta+")";  
+            document.getElementById("x").style.webkitTransform = "scaleX("+gamma+")";
+            document.getElementById("angle").style.webkitTransform = "rotateZ("+(Math.round(event.alpha))+"deg)";
+            
+            if( (Math.abs(beta)<beta0) && (Math.abs(gamma)<gamma0) ){
+                chan[LEFTMOTOR] = chan[RIGHTMOTOR] = 0;
+            }
+            else {
+                var meanY = (rangeY) * beta;
+                var meanX = (rangeX) * gamma;
+                var chl = inv[LEFTMOTOR]*meanY + inv[LEFTMOTOR]*meanX;
+                var chr = inv[RIGHTMOTOR]*meanY - inv[RIGHTMOTOR]*meanX;
+                
+                chan[LEFTMOTOR] = zero[LEFTMOTOR] + chl;
+                chan[RIGHTMOTOR] = zero[RIGHTMOTOR] + chr;
+            }
+
+            if( ( (chan[LEFTMOTOR]!==chanprev[LEFTMOTOR])||(chan[RIGHTMOTOR]!==chanprev[RIGHTMOTOR]) ) && enabled) {
+                enabled = 0;
+                chanprev[LEFTMOTOR] = chan[LEFTMOTOR];
+                chanprev[RIGHTMOTOR] = chan[RIGHTMOTOR];
+                comment = "c0=" + chan[0] + " c1=" + chan[1] + " c2=" + 0 + " old=" + cntr;
+                doSend(comment);
+            }
+	}, true);		
+    } else {
+  	//console.log("Your browser doesn't support Device Orientation");
+    }     
+  }
+
+  function onMessage(evt){
+      enabled = 1;
+  }
+
+  function doSend(message) {
+    cntr++;
+    websocket.send(message + " cntr="+cntr);
+  }
+
+
+</script>
+</head>
+<body onload="init()">
+<div id="x" class="line"></div>
+<div id="y" class ="line"></div>
+<div id="angle"></div>
+<div id="guideX"></div>
+<div id="guideY"></div>
+</body>
+</html>
