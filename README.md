@@ -1,5 +1,8 @@
 # README #
 
+![Git includes software and 3d models to control Lego over WiFi](https://github.com/dmisol/wifi4lego/blob/master/lego-video.png)
+
+
 ## 3D-models ##
 
 3d-models contains OpenSCAD files that survived after HDD crash:
@@ -20,12 +23,12 @@ ToDO: actual manual will be added
 sch and pcb files were lost during HDD crash (with both home and git folders)
 
 ESP-03 is connected as follows:
-GND  -> GPIO15, GND
-3.3V -> CH_PD, VCC
-PWM0 -> GPIO12
-PWM1 -> GPIO13
-PWM2 -> GPIO14
-RX,TX -> URXD,UTXD (for flashing)
-FLASH -> GPIO0 (for flashing)
+* GND  -> GPIO15, GND
+* 3.3V -> CH_PD, VCC
+* PWM0 -> GPIO12
+* PWM1 -> GPIO13
+* PWM2 -> GPIO14
+* RX,TX -> URXD,UTXD (for flashing)
+* FLASH -> GPIO0 (for flashing)
 
 Will also try to fetch Gerber files from Seeed, if they are keeping archive of orders
