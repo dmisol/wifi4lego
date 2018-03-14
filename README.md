@@ -1,6 +1,6 @@
 # README #
 
-## 3D-modesl ##
+## 3D-models ##
 
 3d-models contains OpenSCAD files that survived after HDD crash:
 * aaa-hor.scad is enclosure for PCB and 4 AAA recharcheable batteries
@@ -11,12 +11,21 @@ Please note:
 
 ## remained software ##
 
-Software structure is inherited from https://github.com/Spritetm, see WIKI
+Software structure is inherited from https://github.com/Spritetm, see https://github.com/dmisol/wifi4lego/wiki
 
 ToDO: actual manual will be added
 
 ## Eagle ##
 
 sch and pcb files were lost during HDD crash (with both home and git folders)
-ToDO: describe ESP-03 connectivity. 
+
+ESP-03 is connected as follows:
+GND  -> GPIO15, GND
+3.3V -> CH_PD, VCC
+PWM0 -> GPIO12
+PWM1 -> GPIO13
+PWM2 -> GPIO14
+RX,TX -> URXD,UTXD (for flashing)
+FLASH -> GPIO0 (for flashing)
+
 Will also try to fetch Gerber files from Seeed, if they are keeping archive of orders
